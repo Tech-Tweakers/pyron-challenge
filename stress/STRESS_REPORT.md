@@ -1,6 +1,7 @@
 # PyRon Webhook Service — Load Test Report
 
 ## Overview
+
 This load test validates whether the webhook service can meet the performance requirements:
 
 - **1000 requests per minute** (≈ 16.6 req/s)  
@@ -16,7 +17,6 @@ The system was executed locally using the full stack:
 - **MongoDB**  
 - All orchestrated via **Docker Compose**
 
----
 
 ## Test Methodology
 
@@ -41,7 +41,13 @@ Target endpoint:
 POST https://localhost/webhook
 ```
 
----
+Run command:
+
+```
+K6_INSECURE_SKIP_TLS_VERIFY=true k6 run load_test.js
+
+```
+
 
 ## Hardware Used
 
@@ -67,13 +73,9 @@ The load test was executed on:
 | **Minimum Latency** | 0.79 ms |
 | **Maximum Latency** | 8.85 ms |
 
----
-
 ## Visual Output (Screenshot)
 
 A live screenshot from the execution is included to confirm the raw k6 output:
-
-> *File:* `k6-output.png`
 
 ![k6 screenshot](./k6-output.png)
 
