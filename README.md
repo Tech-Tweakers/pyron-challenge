@@ -1,12 +1,10 @@
-# 🚀 PyRon Webhook Infrastructure Challenge
+# PyRon Webhook Infrastructure Challenge
 
-A complete webhook-processing stack using **FastAPI + Redis + RQ + MongoDB**, fully containerized, secured with **NGINX + HTTPS**, and provisioned automatically through **Terraform on DigitalOcean**, with all secrets handled via **GitHub Actions**.
-
-Designed for high reliability, low latency, and real‑world trading workloads.
+Stack using **FastAPI + Redis + RQ + MongoDB**, fully containerized, secured with **NGINX + HTTPS**, and provisioned automatically through **Terraform on DigitalOcean**, with all secrets handled via **GitHub Actions**.
 
 ---
 
-## 📦 Contents
+## Contents
 
 1. Architecture Overview  
 2. Technologies  
@@ -22,24 +20,24 @@ Designed for high reliability, low latency, and real‑world trading workloads.
 
 ---
 
-## 🏗 Architecture Overview
+## Architecture Overview
 
 ```
                    ┌────────────────────┐
-                   │     TradingView     │
-                   │       Alerts        │
+                   │     TradingView    │
+                   │       Alerts       │
                    └─────────┬──────────┘
                              │  HTTPS (443)
                              ▼
                    ┌────────────────────┐
-                   │       NGINX         │
-                   │   TLS Termination   │
+                   │       NGINX        │
+                   │   TLS Termination  │
                    └─────────┬──────────┘
                          HTTP│
                              ▼
                    ┌────────────────────┐
-                   │      FastAPI        │
-                   │  /webhook endpoint  │
+                   │      FastAPI       │
+                   │  /webhook endpoint │
                    └─────────┬──────────┘
                              │
                              ▼
@@ -55,7 +53,7 @@ Designed for high reliability, low latency, and real‑world trading workloads.
 
 ---
 
-## ⚙ Technologies
+## Technologies
 
 | Component | Technology |
 |-----------|------------|
@@ -70,7 +68,7 @@ Designed for high reliability, low latency, and real‑world trading workloads.
 
 ---
 
-## 🔄 Data Flow
+## Data Flow
 
 1. TradingView sends POST → `/webhook`  
 2. API validates + stores audit log in Mongo  
@@ -82,7 +80,7 @@ Designed for high reliability, low latency, and real‑world trading workloads.
 
 ---
 
-## 🧪 Local Setup
+## Local Setup
 
 ### 1. Create `.env`
 
@@ -114,7 +112,7 @@ curl -k -X POST https://localhost/webhook   -H "Content-Type: application/json" 
 
 ---
 
-## 🔐 NGINX + HTTPS
+## NGINX + HTTPS
 
 NGINX provides:
 
@@ -128,7 +126,7 @@ FastAPI can also run in HTTPS mode when `USE_SSL=true`.
 
 ---
 
-## ⚙ Environment Variables
+## Environment Variables
 
 | Variable | Description |
 |----------|-------------|
@@ -140,15 +138,15 @@ FastAPI can also run in HTTPS mode when `USE_SSL=true`.
 
 ---
 
-## 🤖 GitHub Actions Automation
+## GitHub Actions Automation
 
 Secrets stored in GitHub:
 
 ```
-TF_VAR_do_token
-TF_VAR_ssh_fingerprint
-TF_VAR_git_repo
-TF_VAR_git_branch
+TF_VAR_DO_TOKEN
+TF_VAR_SSH_FINGERPRINT (optional)
+TF_VAR_GIT_REPO
+TF_VAR_GIT_BRANCH
 ```
 
 The CI pipeline performs:
@@ -163,7 +161,7 @@ The infrastructure deploys without touching the DigitalOcean UI.
 
 ---
 
-## 🌐 Terraform Provisioning
+## Terraform Provisioning
 
 Terraform provisions:
 
@@ -187,7 +185,7 @@ terraform apply -auto-approve
 
 ---
 
-## ⚡ Load Testing (k6)
+## Load Testing (k6)
 
 Example script:
 
@@ -217,7 +215,7 @@ Target performance:
 
 ---
 
-## 🛡 Security Hardening
+## Security Hardening
 
 - Non-root containers  
 - NGINX as the public entrypoint  
@@ -230,39 +228,22 @@ Target performance:
 
 ---
 
-## 🎯 Technical Decisions
+## Technical Decisions
 
-### ✔ FastAPI  
+### FastAPI  
 High performance, async-native, easy to scale.
 
-### ✔ RQ + Redis  
+### RQ + Redis  
 Simple, fast, reliable job distribution.
 
-### ✔ NGINX  
+### NGINX  
 Industry standard TLS termination.
 
-### ✔ MongoDB  
+### MongoDB  
 Flexible schema for audit logs.
 
-### ✔ Terraform + GitHub Actions  
+### Terraform + GitHub Actions  
 Full reproducibility and infra automation.
 
-### ✔ HTTPS (self-signed)  
+### HTTPS (self-signed)  
 Meets challenge requirements and mirrors real-world LB TLS.
-
----
-
-## 🧩 Conclusion
-
-The solution is:
-
-- Scalable  
-- Observable  
-- Secure  
-- Fully automated  
-- Latency-efficient  
-- Ready for real trading workloads  
-
-Everything runs via containers, deployed through IaC, with proper secret management and correct production‑grade architecture.
-
-**This project mirrors real-world webhook infrastructure used by high-frequency trading platforms.**
