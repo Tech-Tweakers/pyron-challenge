@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+
+  api:
+    build: ./api
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MONGO_URI=mongodb://mongo:27017
+      - MONGO_DB=pyron
+      - USE_SSL=${USE_SSL:-false}
+    volumes:
+      - ./nginx/certs:/certs:ro
+    command: ["python", "main.py"]
+    networks:
+      - backend
+    depends_on:
+      - redis
+      - mongo
+
+  worker:
+    build: ./worker
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MONGO_URI=mongodb://mongo:27017
+      - MONGO_DB=pyron
+    networks:
+      - backend
+    depends_on:
+      - redis
+      - mongo
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - backend
+
+  mongo:
+    image: mongo:6
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - backend
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  mongo-data:
