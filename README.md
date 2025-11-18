@@ -246,7 +246,7 @@ Target performance:
 
 ![k6 screenshot](./stress/k6-output.png)
 
-More details: [stress_report.md](./stress/stress_report.md)
+More details: [stress_report.md](./stress/STRESS_REPORT.md)
 
 ## Security Hardening
 
