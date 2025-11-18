@@ -18,7 +18,7 @@ The system was executed locally using the full stack:
 
 ---
 
-## 1. Test Methodology
+## Test Methodology
 
 The test was executed with **k6**, using a steady load of 20 VUs for 60 seconds.
 
@@ -43,7 +43,7 @@ POST https://localhost/webhook
 
 ---
 
-## 2. Hardware Used
+## Hardware Used
 
 The load test was executed on:
 
@@ -54,7 +54,7 @@ The load test was executed on:
 
 ---
 
-## 3. Results Summary
+## Results Summary
 
 | Metric | Result |
 |--------|--------|
@@ -69,7 +69,7 @@ The load test was executed on:
 
 ---
 
-## 4. Visual Output (Screenshot)
+## Visual Output (Screenshot)
 
 A live screenshot from the execution is included to confirm the raw k6 output:
 

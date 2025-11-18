@@ -215,6 +215,12 @@ Target performance:
 
 ---
 
+## Test Results
+
+![k6 screenshot](./stress/k6-output.png)
+
+More details: [stress_report.md](./stress/stress_report.md)
+
 ## Security Hardening
 
 - Non-root containers  
