@@ -3,7 +3,7 @@ output "droplet_id" {
 }
 
 output "droplet_public_ip" {
-  value = digitalocean_floating_ip.ip.ip_address
+  value = digitalocean_floating_ip.app_ip.ip_address
 }
 
 output "droplet_private_ipv4" {
@@ -11,5 +11,5 @@ output "droplet_private_ipv4" {
 }
 
 output "ssh_instructions" {
-  value = "ssh root@${digitalocean_floating_ip.ip.ip_address}  (or use the user you configured)"
+  value = "ssh root@${digitalocean_floating_ip.app_ip.ip_address}"
 }

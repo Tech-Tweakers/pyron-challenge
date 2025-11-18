@@ -9,7 +9,6 @@ permissions:
 
 jobs:
   deploy:
-    name: Apply Terraform
     runs-on: ubuntu-latest
 
     env:
@@ -17,19 +16,19 @@ jobs:
       TF_VAR_GIT_REPO: ${{ secrets.TF_VAR_GIT_REPO }}
       TF_VAR_GIT_BRANCH: ${{ secrets.TF_VAR_GIT_BRANCH }}
       TF_VAR_SSH_FINGERPRINT: ${{ secrets.TF_VAR_SSH_FINGERPRINT }}
+      TF_VAR_DOCKER_COMPOSE_VERSION: "v2.17.3"
+      TF_VAR_SWARM_USER: "deploy"
 
     defaults:
       run:
         working-directory: terraform/
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.6.0"
 
       - name: Terraform Init
         run: terraform init -input=false
