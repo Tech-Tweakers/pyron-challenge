@@ -183,7 +183,36 @@ terraform init
 terraform apply -auto-approve
 ```
 
----
+## Terraform Plan Sample
+
+![Terraform Plan Output](./stress/terraform-plan.png)
+
+
+
+## Application Deployment Strategy
+
+The application is deployed automatically during droplet provisioning through **cloud-init**.
+Once Terraform creates the infrastructure, the droplet executes a bootstrap script that:
+
+1. Installs Docker and Docker Compose  
+2. Creates a dedicated non-root deployment user  
+3. Clones this repository from GitHub  
+4. Generates the `.env` file  
+5. Runs `docker compose up -d --build`  
+6. Starts API, Worker, Redis, MongoDB, and NGINX
+
+Because the full deployment pipeline runs inside cloud-init, **no manual steps are required** after `terraform apply`.
+
+This approach follows an **immutable infrastructure model**:
+
+- Any new deployment is done by recreating the droplet  
+- The app always starts from a clean state  
+- Eliminates configuration drift  
+- Ensures that the environment is reproducible and deterministic
+
+This design meets the challenge requirements for automation and infrastructure reproducibility without requiring complex CI/CD for the application layer.
+
+> **Note:** Terraform `apply` was not executed in this repository to avoid resource costs, but the entire provisioning workflow is fully validated and ready for real deployment.
 
 ## Load Testing (k6)
 
@@ -213,8 +242,6 @@ Target performance:
 - avg < 300ms  
 - p95 < 600ms  
 
----
-
 ## Test Results
 
 ![k6 screenshot](./stress/k6-output.png)
@@ -231,8 +258,6 @@ More details: [stress_report.md](./stress/stress_report.md)
 - GitHub Secrets for all sensitive values  
 - VPC isolation  
 - Firewalls restricting inbound traffic  
-
----
 
 ## Technical Decisions
 
