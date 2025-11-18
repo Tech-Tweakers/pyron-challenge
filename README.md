@@ -2,7 +2,11 @@
 
 Stack using **FastAPI + Redis + RQ + MongoDB**, fully containerized, secured with **NGINX + HTTPS**, and provisioned automatically through **Terraform on DigitalOcean**, with all secrets handled via **GitHub Actions**.
 
----
+![Status](https://img.shields.io/badge/Status-Completed-2ecc71?style=for-the-badge)
+![Infra-as-Code](https://img.shields.io/badge/IaC-Terraform-5c4ee5?style=for-the-badge)
+![Security](https://img.shields.io/badge/Secure%20Webhooks-HTTPS%2FNGINX-2980b9?style=for-the-badge)
+![Performance](https://img.shields.io/badge/Load%20Test-10x%20Target-f1c40f?style=for-the-badge)
+
 
 ## Contents
 
@@ -17,8 +21,6 @@ Stack using **FastAPI + Redis + RQ + MongoDB**, fully containerized, secured wit
 9. Load Testing (k6)  
 10. Security Hardening  
 11. Technical Decisions  
-
----
 
 ## Architecture Overview
 
@@ -51,8 +53,6 @@ Stack using **FastAPI + Redis + RQ + MongoDB**, fully containerized, secured wit
                       (Audit + Jobs)
 ```
 
----
-
 ## Technologies
 
 | Component | Technology |
@@ -66,8 +66,6 @@ Stack using **FastAPI + Redis + RQ + MongoDB**, fully containerized, secured wit
 | CI/CD | GitHub Actions |
 | Language | Python 3.11 |
 
----
-
 ## Data Flow
 
 1. TradingView sends POST → `/webhook`  
@@ -77,8 +75,6 @@ Stack using **FastAPI + Redis + RQ + MongoDB**, fully containerized, secured wit
 5. Worker writes processed log into Mongo  
 6. Root endpoint shows live dashboard (auto-refresh)  
 7. NGINX handles TLS + proxying
-
----
 
 ## Local Setup
 
@@ -110,8 +106,6 @@ Webhook test:
 curl -k -X POST https://localhost/webhook   -H "Content-Type: application/json"   -d '{"hello":"world"}'
 ```
 
----
-
 ## NGINX + HTTPS
 
 NGINX provides:
@@ -124,8 +118,6 @@ NGINX provides:
 Self-signed certificates are included for development.  
 FastAPI can also run in HTTPS mode when `USE_SSL=true`.
 
----
-
 ## Environment Variables
 
 | Variable | Description |
@@ -135,8 +127,6 @@ FastAPI can also run in HTTPS mode when `USE_SSL=true`.
 | REDIS_PORT | Redis port |
 | MONGO_URI | Mongo connection URI |
 | MONGO_DB | Database name |
-
----
 
 ## GitHub Actions Automation
 
@@ -158,8 +148,6 @@ terraform apply
 ```
 
 The infrastructure deploys without touching the DigitalOcean UI.
-
----
 
 ## Terraform Provisioning
 
@@ -186,8 +174,6 @@ terraform apply -auto-approve
 ## Terraform Plan Sample
 
 ![Terraform Plan Output](./stress/terraform-plan.png)
-
-
 
 ## Application Deployment Strategy
 
