@@ -1,0 +1,42 @@
+name: Terraform Deploy
+
+on:
+  workflow_dispatch:  # run manually from GitHub Actions tab
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Apply Terraform
+    runs-on: ubuntu-latest
+
+    # Secrets automatically become TF_VAR_* variables
+    env:
+      TF_VAR_DO_TOKEN: ${{ secrets.TF_VAR_DO_TOKEN }}
+      TF_VAR_GIT_REPO: ${{ secrets.TF_VAR_GIT_REPO }}
+      TF_VAR_GIT_BRANCH: ${{ secrets.TF_VAR_GIT_BRANCH }}
+      TF_VAR_SSH_FINGERPRINT: ${{ secrets.TF_VAR_SSH_FINGERPRINT }}
+
+    defaults:
+      run:
+        working-directory: terraform/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.0"
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan -input=false
+
+      - name: Terraform Apply
+        run: terraform apply -input=false -auto-approve tfplan

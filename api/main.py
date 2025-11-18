@@ -28,9 +28,11 @@ queue = Queue("webhook-jobs", connection=redis_conn)
 mongo_client = MongoClient(MONGO_URI)
 db = mongo_client[MONGO_DB_NAME]
 
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
 
 @app.get("/ready")
 def ready():
@@ -41,6 +43,7 @@ def ready():
         return {"status": "ready"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/webhook")
 async def webhook(request: Request):
@@ -121,4 +124,3 @@ if __name__ == "__main__":
             host=HOST,
             port=8000,
         )
-
