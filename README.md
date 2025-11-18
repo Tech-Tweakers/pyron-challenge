@@ -139,15 +139,10 @@ TF_VAR_GIT_REPO
 TF_VAR_GIT_BRANCH
 ```
 
-The CI pipeline performs:
+## Production Secret Management
 
-```
-terraform init
-terraform plan
-terraform apply
-```
+For production environments, secrets such as API keys, database credentials and SSL certificates would be stored in a dedicated secret manager (e.g., HashiCorp Vault or DigitalOcean Secrets). For this challenge, GitHub Actions Secrets were used to securely pass Terraform variables and bootstrap parameters.
 
-The infrastructure deploys without touching the DigitalOcean UI.
 
 ## Terraform Provisioning
 
